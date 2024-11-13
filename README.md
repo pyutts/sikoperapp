@@ -21,7 +21,7 @@ Pastikan Anda sudah menginstal:
 ## Instalasi
 1. Clone repositori ini:
     ```bash
-    git clone https://github.com/username/repo-name.git
+    git clone https://github.com/username/nama-repo.git
     cd repo-name
     ```
 2. Bangun proyek dengan Maven (jika menggunakan Maven):
@@ -32,7 +32,7 @@ Pastikan Anda sudah menginstal:
 
 4. Jalankan aplikasi:
     ```bash
-    java -jar target/nama-aplikasi.jar
+    java -jar target/nama-aplikasi.java
     ```
 
 ## Penggunaan
