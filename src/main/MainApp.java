@@ -15,8 +15,9 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         primaryStage.setTitle("SIKOPER - Sistem Koperasi");
-
-        openLoginForm();  // Buka halaman login sebagai tampilan awal
+        
+        // Buka halaman login sebagai tampilan awal
+        openLoginForm(); 
     }
 
     public void openLoginForm() {
@@ -24,7 +25,7 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FormLogin.fxml"));
             Parent root = loader.load();
 
-            // Atur controller utama
+            // Atur controller di bagian Form Controller
             FormController controller = loader.getController();
             controller.setMainApp(this);
 
@@ -41,7 +42,7 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FormDaftar.fxml"));
             Parent root = loader.load();
 
-            // Buat stage baru untuk form daftar
+            // stage atau windows untuk form daftar
             Stage registerStage = new Stage();
             registerStage.setTitle("Form Daftar");
             registerStage.setScene(new Scene(root));

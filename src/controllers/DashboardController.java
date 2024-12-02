@@ -1,5 +1,4 @@
 package controllers;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,15 +9,17 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import services.db_connect;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 
 public class DashboardController {
     
-    // Inner class User
     public static class User {
         private Integer id;
         private String nama;      
@@ -27,7 +28,7 @@ public class DashboardController {
         private String password;
         private String alamat;    
 
-        public User(Integer id, String name, String username, String email, String password, String address) {
+        public User (Integer id, String name, String username, String email, String password, String address) {
             this.id = id;
             this.nama = name;
             this.username = username;
@@ -36,21 +37,50 @@ public class DashboardController {
             this.alamat = address;
         }
 
-        // Getters
         public Integer getId() { return id; }
         public String getNama() { return nama; }         
         public String getUsername() { return username; }
         public String getEmail() { return email; }
         public String getPassword() { return password; }
         public String getAlamat() { return alamat; }    
-
-        // Setters
         public void setId(Integer id) { this.id = id; }
         public void setNama(String nama) { this.nama = nama; }
         public void setUsername(String username) { this.username = username; }
         public void setEmail(String email) { this.email = email; }
         public void setPassword(String password) { this.password = password; }
         public void setAlamat(String alamat) { this.alamat = alamat; }
+    }
+    
+    // memanggil tombol simpanan
+    @FXML
+    private void goToSimpanan() {
+        try {
+      
+            Parent simpananView = FXMLLoader.load(getClass().getResource("/views/DashboardSimpanan.fxml"));
+            Scene scene = new Scene(simpananView);
+            
+            Stage stage = (Stage) tableView.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }    
+    
+    //memanggil tombol anggota
+    @FXML
+    private void goToAnggota() {
+        try {
+
+            Parent anggotaView = FXMLLoader.load(getClass().getResource("/views/DashboardAnggota.fxml"));
+            Scene scene = new Scene(anggotaView);
+
+            Stage stage = (Stage) tableView.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     @FXML
@@ -68,8 +98,6 @@ public class DashboardController {
     @FXML
     private TableColumn<User, String> columnEmail;
     
-    @FXML
-    private TableColumn<User, String> columnPassword;
     
     @FXML
     private TableColumn<User, String> columnAlamat;  
@@ -78,7 +106,6 @@ public class DashboardController {
 
     @FXML
     public void initialize() {
-        // Menggunakan lambda untuk menghindari masalah dengan PropertyValueFactory
         columnID.setCellValueFactory(data -> 
             new SimpleObjectProperty<>(data.getValue().getId()));
         
@@ -91,16 +118,12 @@ public class DashboardController {
         columnEmail.setCellValueFactory(data -> 
             new SimpleStringProperty(data.getValue().getEmail()));
         
-        columnPassword.setCellValueFactory(data -> 
-            new SimpleStringProperty(data.getValue().getPassword()));
         
         columnAlamat.setCellValueFactory(data -> 
             new SimpleStringProperty(data.getValue().getAlamat()));
 
-        // Set items ke TableView
         tableView.setItems(userList);
         
-        // Load data dari database
         loadUserData();
     }
 
@@ -110,7 +133,6 @@ public class DashboardController {
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
 
-            // Bersihkan list yang ada
             userList.clear();
             
             while (rs.next()) {
@@ -138,7 +160,6 @@ public class DashboardController {
         alert.showAndWait();
     }
 
-    // Method untuk refresh data
     @FXML
     private void refreshData() {
         loadUserData();

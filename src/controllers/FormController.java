@@ -1,5 +1,4 @@
 package controllers;
-
 import main.MainApp;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +10,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import services.db_connect;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -69,7 +67,7 @@ public class FormController {
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
                 showAlert("Sukses", "Pendaftaran berhasil.");
-                openLogin();  // Arahkan ke halaman login setelah daftar berhasil
+                openLogin();  
             } else {
                 showAlert("Error", "Pendaftaran gagal.");
             }
@@ -79,7 +77,6 @@ public class FormController {
         }
     }
 
-    // Handle tombol login
     @FXML
     private void handleLogin() {
         String username = usernameField.getText();
@@ -87,13 +84,12 @@ public class FormController {
 
         if (verifikasiLogin(username, password)) {
             showAlert("Sukses", "Login berhasil, selamat datang " + username + "!");
-            openDashboardAnggota();  // Arahkan ke dashboard setelah login berhasil
+            openDashboardAnggota();  
         } else {
             showAlert("Error", "Username atau password salah.");
         }
     }
 
-    // Verifikasi login
     private boolean verifikasiLogin(String username, String password) {
         String query = "SELECT * FROM users WHERE username = ? AND password = MD5(?)";
         try (Connection conn = db_connect.connect();
@@ -110,7 +106,6 @@ public class FormController {
         }
     }
 
-    // Pindah ke halaman login
     private void openLogin() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
@@ -125,7 +120,6 @@ public class FormController {
         }
     }
 
-    // Pindah ke dashboard anggota
     private void openDashboardAnggota() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/DashboardAnggota.fxml"));
@@ -140,7 +134,6 @@ public class FormController {
         }
     }
 
-    // Tampilkan pesan alert
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
